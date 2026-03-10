@@ -32,7 +32,7 @@ class AuthController extends Controller
         $domain = $request->getHost(); // detect the domain
 
         // Admin login
-        if ($domain === '127.0.0.1' || $domain === 'localhost') {
+        if ($domain == '127.0.0.1' || $domain == 'localhost') {
             $user = User::on('mysql')->where('email', $email)->first();
             if ($user && Hash::check($password, $user->password)) {
                 Auth::guard('web')->login($user);
@@ -46,8 +46,8 @@ class AuthController extends Controller
         if (!$tenant) {
             abort(404, 'Tenant not found');
         }
-       
-        $user = User::where('email', $email)->first();
+       $tenant->makeCurrent(); 
+        $user = User::on('tenant')->where('email', $email)->first();
 
         if ($user && Hash::check($password, $user->password)) {
             Auth::login($user); 
@@ -117,5 +117,22 @@ class AuthController extends Controller
         } catch (\Exception $ex) {
             return redirect()->back()->with('error', 'Something went wrong: ' . $ex->getMessage());
         }
+    }
+
+    public function logout(Request $request)
+    {
+        // Logout user
+        Auth::logout();
+
+        // Forget current tenant (important for multitenancy)
+        if (Tenant::current()) {
+            Tenant::forgetCurrent();
+        }
+
+        // Invalidate session
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }

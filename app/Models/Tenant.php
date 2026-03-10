@@ -8,7 +8,6 @@ use Spatie\Multitenancy\Models\Tenant as BaseTenant;
 
 class Tenant extends BaseTenant
 {
-    protected $connection = 'tenant';
     protected $fillable = [
         'name',
         'domain',
