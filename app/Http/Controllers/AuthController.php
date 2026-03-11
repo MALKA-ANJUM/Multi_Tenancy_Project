@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminUser;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
 use function Laravel\Prompts\alert;
 use Spatie\Permission\Models\Role;
 
@@ -29,13 +29,13 @@ class AuthController extends Controller
 
         $email = $request->email;
         $password = $request->password;
-        $domain = $request->getHost(); // detect the domain
-
+        $domain = $request->getHost();
         // Admin login
         if ($domain == '127.0.0.1' || $domain == 'localhost') {
-            $user = User::on('mysql')->where('email', $email)->first();
+            $user = AdminUser::where('email', $email)->first();
+
             if ($user && Hash::check($password, $user->password)) {
-                Auth::guard('web')->login($user);
+                Auth::guard('admin')->login($user);
                 return redirect()->route('admin.dashboard'); 
             }
             return back()->with('error', 'Invalid credentials for central admin');
@@ -46,12 +46,13 @@ class AuthController extends Controller
         if (!$tenant) {
             abort(404, 'Tenant not found');
         }
-       $tenant->makeCurrent(); 
-        $user = User::on('tenant')->where('email', $email)->first();
+        $tenant->makeCurrent(); 
+     
+        $user = User::where('email', $email)->first();
 
         if ($user && Hash::check($password, $user->password)) {
             Auth::login($user); 
-            return redirect()->route('user.dashboard');
+            return redirect()->route('tenant.dashboard');
         }
         return back()->with('error', 'Invalid credentials for tenant');
     }

@@ -12,7 +12,8 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-    /**
+    protected $connection = 'tenant';
+    protected $table = 'users';    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -23,7 +24,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $table="users";
 
     /**
      * The attributes that should be hidden for serialization.
