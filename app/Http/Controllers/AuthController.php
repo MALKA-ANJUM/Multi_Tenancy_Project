@@ -119,21 +119,4 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Something went wrong: ' . $ex->getMessage());
         }
     }
-
-    public function logout(Request $request)
-    {
-        // Logout user
-        Auth::logout();
-
-        // Forget current tenant (important for multitenancy)
-        if (Tenant::current()) {
-            Tenant::forgetCurrent();
-        }
-
-        // Invalidate session
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('login');
-    }
 }

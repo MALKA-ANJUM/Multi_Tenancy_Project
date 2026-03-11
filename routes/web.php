@@ -25,18 +25,20 @@ Route::get('company-register', [AuthController::class, 'companyRegister'])->name
 Route::post('store-login', [AuthController::class, 'storeLogin'])->name('store.login');
 Route::post('company-store-register', [AuthController::class, 'companyStoreRegister'])->name('company.store.register');
 
-Route::middleware(['web', 'auth'])->group(function () {
    
     // Admin Route
-    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('tenant-list', [AdminController::class, 'tenantList'])->name('tenant.list');
+        Route::post('logout', [AdminController::class, 'logout'])->name('logout');
 
     });
 
     // Tenant Route
     Route::prefix('tenant')->name('tenant.')->middleware(['tenant'])->group(function () {
         Route::get('dashboard', [TenantController::class, 'tenantDashboard'])->name('dashboard');
+        Route::post('logout', [TenantController::class, 'logout'])->name('logout');
+
 
         // Roles & permission
         Route::get('user-list', [RoleAndPermissionController::class, 'userList'])->name('user-list');
@@ -52,5 +54,3 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::post('add-role', [RoleAndPermissionController::class, 'addRole'])->name('add-role');
     });
 
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});

@@ -102,11 +102,7 @@
                                </span></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                       
-                        <!-- <a class="dropdown-item" href="{{ route('logout') }}"><i class="me-50"
-                                data-feather="power"></i>Logout</a> -->
-
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('admin.logout') }}">
                             @csrf
                             <button type="submit" class="dropdown-item">Logout</button>
                         </form>
