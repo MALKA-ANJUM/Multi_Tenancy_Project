@@ -31,12 +31,12 @@ Generate application key:
 php artisan key:generate
 ```
 Configure your central database in .env:
-
+```bash
 DB_CONNECTION=mysql
 DB_DATABASE=main_database
 DB_USERNAME=root
 DB_PASSWORD=
-
+```
 Run migrations:
 ```bash
 php artisan migrate
