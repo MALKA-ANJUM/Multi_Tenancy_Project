@@ -1,4 +1,4 @@
-# Multi-Tenant Project Management System (Laravel + Spatie)
+# Multi-Tenant Project Management System
 
 ## Overview
 
