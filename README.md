@@ -9,6 +9,46 @@ The system supports **centralized admin management** and **tenant-level project 
 
 ---
 
+## Installation & Setup
+
+Clone the repository:
+```bash
+git clone https://github.com/MALKA-ANJUM/Multi_Tenancy_Project
+cd Multi_Tenancy_Project
+```
+
+Install dependencies:
+```bash
+composer install
+```
+
+Copy environment file:
+```bash
+cp .env.example .env
+```
+Generate application key:
+```bash
+php artisan key:generate
+```
+Configure your central database in .env:
+
+DB_CONNECTION=mysql
+DB_DATABASE=main_database
+DB_USERNAME=root
+DB_PASSWORD=
+
+Run migrations:
+```bash
+php artisan migrate
+```
+Run seeders:
+```bash
+php artisan db:seed
+```
+Start the development server:
+```bash
+php artisan serve
+```
 ## Features
 
 ### 1. Multi-Tenancy
