@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 class RoleAndPermissionController extends Controller
 {
+    // Role Rouets
     public function userList(Request $request)
     {
         $users = User::paginate(10);
@@ -21,7 +22,7 @@ class RoleAndPermissionController extends Controller
     }
     public function addUserForm(Request $request)
     {
-        $roles = Role::get();;
+        $roles = TenantRole::get();;
         return view('tenant.user.add', compact('roles'));
     }
     public function addUser(Request $request)
@@ -37,7 +38,7 @@ class RoleAndPermissionController extends Controller
             $newUser->email =  $request->email;
             $newUser->password =  Hash::make($request->password);
             $newUser->save();
-            $role = Role::where('name', $request->role)->first();
+            $role = TenantRole::where('name', $request->role)->first();
             $newUser->assignRole($role);
             return to_route('tenant.user-list')->with('User Added Successfully');
         } catch (Exception $e) {
@@ -48,7 +49,7 @@ class RoleAndPermissionController extends Controller
     public function editUser(Request $request)
     {
         $user = User::where('id', $request->id)->first();
-        $roles = Role::get();
+        $roles = TenantRole::get();
         return view('tenant.user.edit', compact('user', 'roles'));
     }
     public function updateUser(Request $request)
@@ -61,7 +62,7 @@ class RoleAndPermissionController extends Controller
             $existingUser->name =  $request->name;
             $existingUser->email =  $request->email;
             $existingUser->save();
-            $role = Role::where('name', $request->role)->first();
+            $role = TenantRole::where('name', $request->role)->first();
             $existingUser->syncRoles([$role->name]);
             return to_route('tenant.user-list')->with('success', 'User Updated Successfully');
         } catch (Exception $e) {
@@ -79,7 +80,7 @@ class RoleAndPermissionController extends Controller
         }
     }
 
-    // Permissions
+    // Permissions Rouet
     public function addPermissionForm()
     {
         return view('tenant.permission.add-permission');
@@ -117,20 +118,20 @@ class RoleAndPermissionController extends Controller
 
     public function assignPermissionForm(Request $request)
     {
-
         // get the Route names and add to permisions table
         $routes = Route::getRoutes();
-
-
         foreach ($routes as $route) {
             $routeName = $route->getName();
             $action = $route->getAction();
+            $routeGroup = isset($action['prefix']) ? ltrim($action['prefix'], '/') : null;
+
             // Get the prefix from the route action
 
             if ($routeName) {
                 TenantPermission::firstOrCreate([
                     'name' => $routeName,
                     'guard_name' => 'web',
+                    'group' => $routeGroup,
                 ]);
             }
         }
@@ -142,10 +143,8 @@ class RoleAndPermissionController extends Controller
         $role = TenantRole::findByName($request->role_name);
         $roleName = $request->role_name;
         $assignedPermissions = $role->permissions->pluck('id')->toArray();
-        // $permissions = TenantPermission::orderBy('id', 'ASC')->get();
-        $permissions = TenantPermission::all()->groupBy(function ($permission) {
-            return explode('.', $permission->name)[0];
-        });
+        $permissions = TenantPermission::orderBy('id', 'ASC')->get()->groupBy('group');
+        
         return view('tenant.permission.assign-permissions', compact('permissions', 'assignedPermissions', 'roleName'));
     }
 

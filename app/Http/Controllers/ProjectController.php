@@ -10,7 +10,11 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with('users')->paginate(10);
+         $projects = Project::with('users')
+        ->whereHas('users', function ($query) {
+            $query->where('user_id', auth()->id());
+        })
+        ->paginate(10);
         return view('tenant.projects.list', compact('projects'));
     }
 

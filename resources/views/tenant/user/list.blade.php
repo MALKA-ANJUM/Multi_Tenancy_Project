@@ -31,9 +31,11 @@
                 @endif
                 <div class="card-header border-bottom">
                     <div id="tableHeaderDiv">
+                        @can('tenant.add-user-form')
                         <a href="{{ route('tenant.add-user-form') }}" class="btn btn-primary">
                             @lang('Add New User')
                         </a>
+                        @endcan
                     </div>
                 </div>
                 <div class="card-datatable table-responsive">
@@ -57,9 +59,14 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->getRoleNames()->first()}}</td>
                                 <td>
+                                    @can('tenant.edit-user')
                                     <a class="btn btn-outline-success" href="{{route('tenant.edit-user',['id' => $user->id])}}" id="editschool"><i class="fa fa-edit"></i></a>
+                                    @endcan
+
+                                    @can('tenant.delete-user')
                                     <a href="{{route('tenant.delete-user',['id' => $user->id])}}" class="btn btn-outline-danger text-danger"><i
                                             class="fa fa-trash"></i></a>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach

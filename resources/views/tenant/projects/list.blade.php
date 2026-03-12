@@ -31,9 +31,11 @@
                 @endif
                 <div class="card-header border-bottom">
                     <div id="tableHeaderDiv">
+                        @can('tenant.projects.create')
                         <a href="{{ route('tenant.projects.create') }}" class="btn btn-primary">
                             @lang('Add New Project')
                         </a>
+                        @endcan
                     </div>
                 </div>
                 <div class="card-datatable table-responsive">
@@ -56,6 +58,7 @@
                                 <td>{{ $project->description }}</td>
 
                                 <td>
+                                @can('tenant.projects.status')
                                     <form action="{{ route('tenant.projects.status',$project->id) }}" method="POST">
                                         @csrf
                                         <select name="status" onchange="this.form.submit()" class="form-control">
@@ -77,20 +80,22 @@
 
                                         </select>
                                     </form>
+                                @endcan
                                 </td>
 
                                 <td>
-
+                                @can('tenant.projects.edit')
                                     <a class="btn btn-outline-success"
                                         href="{{ route('tenant.projects.edit',$project->id) }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
-
+                                @endcan
+                                @can('tenant.projects.delete')
                                     <a href="{{ route('tenant.projects.delete',$project->id) }}"
                                         class="btn btn-outline-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
-
+                                @endcan
                                 </td>
 
                             </tr>

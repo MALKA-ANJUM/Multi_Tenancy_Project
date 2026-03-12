@@ -30,6 +30,7 @@ class AuthController extends Controller
         $email = $request->email;
         $password = $request->password;
         $domain = $request->getHost();
+        
         // Admin login
         if ($domain == '127.0.0.1' || $domain == 'localhost') {
             $user = AdminUser::where('email', $email)->first();

@@ -21,10 +21,9 @@ class AdminController extends Controller
 
     public function logout(Request $request)
     {
-        // Logout user
+        // Logout admin panel
         Auth::logout();
 
-        // Forget current tenant (important for multitenancy)
         if (Tenant::current()) {
             Tenant::forgetCurrent();
         }

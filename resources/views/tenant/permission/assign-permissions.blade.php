@@ -23,7 +23,7 @@
                     @csrf
                         <div class="row">
                             @foreach ($permissions as $group=>$permission)
-                                @if(in_array($group, ['_ignition', 'sanctum', 'api', null]))
+                                @if(in_array($group, ['_ignition', 'sanctum', 'api', null, 'admin']))
                                     @continue
                                 @endif
                             <div class="col-lg-4 col-md-6 col-12">

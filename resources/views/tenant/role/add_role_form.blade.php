@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <form action="{{ route('admin.add-role') }}" method="POST" id="roleAddForm">
+                                <form action="{{ route('tenant.add-role') }}" method="POST" id="roleAddForm">
                                     @csrf
                                     <div class="mb-3">
                                         <label for="role_name" class="form-label">@lang('Role Title')</label>

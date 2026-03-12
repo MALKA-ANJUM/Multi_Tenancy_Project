@@ -94,19 +94,21 @@
                 <li class="nav-item dropdown dropdown-user">
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
-                            <span class="user-name fw-bolder">{{ auth()->user()->name }}</span>
+                            <span class="user-name fw-bolder">{{ auth()->user()->name ?? '' }}</span>
                         </div>
                         <span class="avatar">
                             <img class="round" src="../../../app-assets//images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40">
                             <span class="avatar-status-online"></span>
                         </span>
                     </a>
+                    @can('tenant.logout')
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         <form method="POST" action="{{ route('tenant.logout') }}">
                             @csrf
                             <button type="submit" class="dropdown-item">Logout</button>
                         </form>
                     </div>
+                    @endcan
                 </li>
             </ul>
         </div>
@@ -119,13 +121,15 @@
             <!-- Horizontal menu content-->
             <div class="navbar-container main-menu-content" data-menu="menu-container">
                 <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+                    @can('tenant.projects')
                     <li data-menu="" class=" nav-item @if ( request()->is('tenant/projects*') ) active @endif">
                         <a class="dropdown-item d-flex align-items-center" href="{{ route('tenant.projects') }}" data-bs-toggle="" data-i18n="Projects">
                             <i data-feather="type"></i>
                             <span data-i18n="Typography">Projects</span>
                         </a>
                     </li>
-
+                    @endcan
+                    @canany(['tenant.user-list','tenant.roles'])
                     <li class="dropdown nav-item @if ( (request()->is('tenant/user-list')) || (request()->is('tenant/add-user-form')) || (request()->is('tenant/edit-user*')) || (request()->is('tenant/add-role*')) || (request()->is('tenant/roles')) || (request()->is('tenant/assign-permissions*')) ) active @endif" data-menu="dropdown">
                         <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                             <i data-feather="edit"></i>
@@ -133,19 +137,25 @@
                         </a>
                         <ul class="dropdown-menu" data-bs-popper="none">
                             <li data-menu="" class="">
+                                @can('tenant.user-list')
                                 <a class="dropdown-item d-flex align-items-center" href="{{ route('tenant.user-list') }}" data-bs-toggle="" data-i18n="Users">
                                     <i data-feather="box"></i>
                                     <span data-i18n="Users">Users</span>
                                 </a>
+                                @endcan
                             </li>
+
                             <li data-menu="">
+                                @can('tenant.roles')
                                 <a class="dropdown-item d-flex align-items-center" href="{{ route('tenant.roles') }}" data-bs-toggle="" data-i18n="Roles">
                                     <i data-feather="package"></i>
                                     <span data-i18n="Roles">Roles</span>
                                 </a>
+                                @endcan
                             </li>
                         </ul>
                     </li>
+                    @endcanany
                 </ul>
             </div>
         </div>
