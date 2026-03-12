@@ -153,25 +153,6 @@ Each tenant has its own database containing:
 
 ---
 
-## Project Structure
-
-```
-app/
- ├ Controllers
- │   ├ AuthController
- │   ├ AdminController
- │   ├ ProjectController
- │   └ RoleAndPermissionController
- │
- ├ Models
- │   ├ Tenant
- │   ├ User
- │   ├ AdminUser
- │   ├ Project
- │   ├ Role
- │   └ Permission
-```
-
 ---
 
 ## Key Relationships
@@ -210,7 +191,7 @@ project_user
 
 ---
 
-## Learning Outcomes
+## Project Demonstration
 
 This project demonstrates:
 
