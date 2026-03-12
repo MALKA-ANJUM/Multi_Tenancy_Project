@@ -1,5 +1,5 @@
 @extends('tenant.layouts.layout')
-@section('title', 'Roles')
+@section('title', 'Users')
 @section('content')
 
 <!-- BEGIN: Content-->

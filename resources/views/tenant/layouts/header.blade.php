@@ -119,14 +119,14 @@
             <!-- Horizontal menu content-->
             <div class="navbar-container main-menu-content" data-menu="menu-container">
                 <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
-                    <li data-menu="">
-                        <a class="dropdown-item d-flex align-items-center" href="ui-typography.html" data-bs-toggle="" data-i18n="Typography">
+                    <li data-menu="" class=" nav-item @if ( request()->is('tenant/projects*') ) active @endif">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('tenant.projects') }}" data-bs-toggle="" data-i18n="Projects">
                             <i data-feather="type"></i>
                             <span data-i18n="Typography">Projects</span>
                         </a>
                     </li>
 
-                    <li class="dropdown nav-item @if ( request()->is('tenant/user-list') || request()->is('tenant/add-user-form') || request()->is('tenant/edit-user*') || (request()->is('tenant/add-role*') || request()->is('tenant/roles') || request()->is('tenant/assign-permissions*') ) active @endif" data-menu="dropdown">
+                    <li class="dropdown nav-item @if ( (request()->is('tenant/user-list')) || (request()->is('tenant/add-user-form')) || (request()->is('tenant/edit-user*')) || (request()->is('tenant/add-role*')) || (request()->is('tenant/roles')) || (request()->is('tenant/assign-permissions*')) ) active @endif" data-menu="dropdown">
                         <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                             <i data-feather="edit"></i>
                             <span data-i18n="User">Setting permission</span>
