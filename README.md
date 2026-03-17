@@ -1,4 +1,4 @@
-# Multi-Tenant Project Management System
+# Multi-Tenancy Project Management System
 
 ## Overview
 
