@@ -1,14 +1,54 @@
-# Multi-Tenant Project Management System (Laravel + Spatie)
+# Multi-Tenancy User Management System
 
 ## Overview
 
-This project is a **multi-tenant SaaS application** built using **Laravel** and **Spatie Multitenancy**.
+This project is a **multi-tenant application** built using **Laravel** and **Spatie Multitenancy**.
 Each tenant (company) has its own isolated database where users, roles, permissions, and projects are stored.
 
 The system supports **centralized admin management** and **tenant-level project management with role-based access control**.
 
 ---
 
+## Installation & Setup
+
+Clone the repository:
+```bash
+git clone https://github.com/MALKA-ANJUM/Multi_Tenancy_Project
+cd Multi_Tenancy_Project
+```
+
+Install dependencies:
+```bash
+composer install
+```
+
+Copy environment file:
+```bash
+cp .env.example .env
+```
+Generate application key:
+```bash
+php artisan key:generate
+```
+Configure your central database in .env:
+```bash
+DB_CONNECTION=mysql
+DB_DATABASE=main_database
+DB_USERNAME=root
+DB_PASSWORD=
+```
+Run migrations:
+```bash
+php artisan migrate
+```
+Run seeders:
+```bash
+php artisan db:seed
+```
+Start the development server:
+```bash
+php artisan serve
+```
 ## Features
 
 ### 1. Multi-Tenancy
@@ -113,25 +153,6 @@ Each tenant has its own database containing:
 
 ---
 
-## Project Structure
-
-```
-app/
- ├ Controllers
- │   ├ AuthController
- │   ├ AdminController
- │   ├ ProjectController
- │   └ RoleAndPermissionController
- │
- ├ Models
- │   ├ Tenant
- │   ├ User
- │   ├ AdminUser
- │   ├ Project
- │   ├ Role
- │   └ Permission
-```
-
 ---
 
 ## Key Relationships
@@ -170,7 +191,7 @@ project_user
 
 ---
 
-## Learning Outcomes
+## Project Demonstration
 
 This project demonstrates:
 
