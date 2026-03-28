@@ -68,6 +68,8 @@
                         <div class="card mb-0">
                             
                             <div class="card-body">
+                            <h3>Multi-tenant Management</h3>
+
                                 <a href="{{ route('login') }}" class="brand-logo">
                                     @if(request()->getHost() == '127.0.0.1' || request()->getHost() == 'localhost')
                                         <h2 class="brand-text text-primary ms-1">Admin Panel</h2>
