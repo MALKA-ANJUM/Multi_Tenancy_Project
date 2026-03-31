@@ -5,6 +5,9 @@
 This project is a **multi-tenant application** built using **Laravel** and **Spatie Multitenancy**.
 Each tenant (company) has its own isolated database where users, roles, permissions, and projects are stored.
 
+
+
+
 The system supports **centralized admin management** and **tenant-level project management with role-based access control**.
 
 ---
